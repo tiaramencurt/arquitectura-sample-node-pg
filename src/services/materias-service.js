@@ -20,6 +20,7 @@ export default class MateriasService {
         return returnEntity;
     }
 
+    //JSON --> para validar que llego, si materia esta vacío pide nombre obligatorio 
     createAsync = async (entity) => {
         console.log(`MateriasService.createAsync(${JSON.stringify(entity)})`);
         if (!entity?.nombre || entity.nombre.trim() === '') {
