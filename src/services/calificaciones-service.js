@@ -50,16 +50,19 @@ export default class CalificacionesService {
             entity.id_alumno,
             entity.id_materia
         );
+        // Si ya existe, error
         if (existente != null) {
+            // Creamos un error personalizado
             const error = new Error(`Ya existe una calificación para el alumno ${entity.id_alumno} en la materia ${entity.id_materia}.`);
             error.statusCode = 409;
             throw error;
         }
-
+        // Si pasó las validaciones, se crea la nueva calificación
         const newEntity = await this.CalificacionesRepository.createAsync(entity);
         return newEntity;
     }
 
+    // Actualiza una calificación existente
     updateAsync = async (entity) => {
         console.log(`CalificacionesService.updateAsync(${JSON.stringify(entity)})`);
 
@@ -78,13 +81,14 @@ export default class CalificacionesService {
         return rowsAffected;
     }
 
+    // Elimina una calificación por id
     deleteByIdAsync = async (id) => {
         console.log(`CalificacionesService.deleteByIdAsync(${id})`);
         const rowsAffected = await this.CalificacionesRepository.deleteByIdAsync(id);
         return rowsAffected;
     }
 
-    // --- Helpers de validación ---
+    // Validaci{on}
 
     validarNota = (nota) => {
         if (nota === undefined || nota === null || !Number.isInteger(nota) || nota < 0 || nota > 10) {
